@@ -7,7 +7,7 @@ export const chunk = (array: Array<any>, size: number): Array<Array<any>> => {
     return res;
 }
 
-export const rotateArray = (array: Array<any>[], steps: number) => {
+export const rotateArray = (array: Array<any>, steps: number) => {
     // First space is locked
     let swappableItems = array.slice(1);
     for(let i = 0; i < steps; i++) {

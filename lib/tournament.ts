@@ -3,7 +3,7 @@ import {chunk, rotateArray, shuffle} from "./util/array-utils";
 import {Match} from "./model/match";
 import {smallestCoprime} from "./util/math-utils";
 
-interface RoundOptions {
+export interface RoundOptions {
     teamSize: number;
     numberOfRounds: number;
     shuffle?: boolean;
@@ -11,16 +11,16 @@ interface RoundOptions {
 
 export class Tournament {
 
-    static generate(players: Array<any>, options: RoundOptions): Array<Round> {
+    static generate<T>(players: Array<T>, options: RoundOptions): Array<Round<T>> {
         if(options.shuffle) players = shuffle(players);
-        let rounds = new Array<Round>();
+        let rounds = new Array<Round<T>>();
         for(let i = 0; i < options.numberOfRounds; i++) {
             rounds.push(this.generateRound(i, players, options));
         }
         return rounds;
     }
 
-    private static generateRound(roundNumber: number, players: Array<any>, options: RoundOptions): Round {
+    private static generateRound<T>(roundNumber: number, players: Array<T>, options: RoundOptions): Round<T> {
         const rotations = smallestCoprime(players.length, options.teamSize);
         const rotatedPlayers = rotateArray(players, roundNumber * rotations);
         const playersPerMatch = 2*options.teamSize;
@@ -31,7 +31,7 @@ export class Tournament {
             .map(rotatedPlayers => ({
                 teamA: rotatedPlayers.slice(0,  options.teamSize),
                 teamB: rotatedPlayers.slice(options.teamSize)
-            } as Match));
+            } as Match<T>));
 
         return {
             idlePlayers,

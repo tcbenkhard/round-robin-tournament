@@ -77,7 +77,21 @@ describe('tournament', () => {
             'Peter',
         ];
 
-        const rounds = Tournament.generate(playersStrings, {
+        interface Player {
+            name: string;
+        }
+
+        const playerObjects: Player[] = [
+            {name: 'Timo'},
+            {name: 'Timo'},
+            {name: 'Timo'},
+            {name: 'Timo'},
+            {name: 'Timo'},
+            {name: 'Timo'},
+            {name: 'Timo'},
+        ]
+
+        const rounds = Tournament.generate(playerObjects, {
             teamSize: 2,
             numberOfRounds: 3
         });
